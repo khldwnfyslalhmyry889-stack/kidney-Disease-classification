@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+
+# TensorFlow / Keras
+*.h5
+*.keras
+*.ckpt
+checkpoints/
+tensorboard_logs/
+
+# ML experiments
+mlruns/
+wandb/
+
+# Large datasets
+data/raw/
+data/processed/
+data/splits/
+
+# Python build files
+build/
+dist/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
+# Local backups and diagnostic artifacts
+*.backup*
+Untitled.ipynb
+reports/diagnostics/
+reports/figures/
+
+# BEGIN LOCAL DATA PROTECTION
+# Do not commit datasets, downloaded archives, or generated artifacts.
+/data/
+/datasets/
+/artifacts/
+/archive/
+
+# Per-image reports may expose local paths and dataset filenames.
+/reports/metrics/validation_*.csv
+
+# END LOCAL DATA PROTECTION

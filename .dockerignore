@@ -1,0 +1,16 @@
+.git/
+.dvc/
+.github/
+.ipynb_checkpoints/
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+env/
+archive/
+data/
+logs/
+reports/
+*.ipynb
+*.backup*
+Untitled.ipynb

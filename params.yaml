@@ -1,0 +1,10 @@
+# إعدادات التوافق مع بنية المشروع الأصلية.
+# الإعدادات الأساسية الحالية موجودة في config/config.yaml.
+AUGMENTATION: true
+IMAGE_SIZE: [224, 224, 3]
+BATCH_SIZE: 16
+INCLUDE_TOP: false
+EPOCHS: 25
+CLASSES: 4
+WEIGHTS: imagenet
+LEARNING_RATE: 0.001

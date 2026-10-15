@@ -1,0 +1,72 @@
+stages:
+  baseline_training:
+    cmd: python src/cnnClassifier/pipeline/stage_03_model_training.py
+    deps:
+      - src/cnnClassifier/pipeline/stage_03_model_training.py
+      - src/models/train.py
+      - src/cnnClassifier/components/model_builder.py
+      - src/cnnClassifier/components/data_loader.py
+      - config/config.yaml
+      - data/splits/train
+      - data/splits/val
+    params:
+      - config/config.yaml:
+          - data.classes
+          - data.num_classes
+          - data.split_dir
+          - training.batch_size
+          - training.epochs
+          - training.image_size
+          - training.seed
+          - model.baseline_architecture
+          - model.weights
+    outs:
+      - models/best_candidate_model.h5
+      - models/confidence_calibration.json
+      - reports/metrics/training_summary.json
+      - logs/training_history.csv
+
+  fine_tuning:
+    cmd: python src/cnnClassifier/pipeline/stage_05_fine_tuning.py --force
+    deps:
+      - src/cnnClassifier/pipeline/stage_05_fine_tuning.py
+      - src/models/fine_tune.py
+      - src/cnnClassifier/components/data_loader.py
+      - config/config.yaml
+      - data/splits/train
+      - data/splits/val
+      - models/best_candidate_model.h5
+    params:
+      - config/config.yaml:
+          - data.classes
+          - data.split_dir
+          - training.image_size
+          - training.seed
+          - training.fine_tune_epochs
+          - training.fine_tune_batch_size
+          - training.fine_tune_learning_rate
+    outs:
+      - models/best_finetuned_model.h5
+      - models/fine_tuned_confidence_calibration.json
+      - reports/metrics/fine_tune_summary.json
+      - logs/fine_tune_history.csv
+
+  validation_evaluation:
+    cmd: python src/cnnClassifier/pipeline/stage_04_model_evaluation.py
+    deps:
+      - src/cnnClassifier/pipeline/stage_04_model_evaluation.py
+      - src/evaluation/evaluate_validation.py
+      - config/config.yaml
+      - data/splits/val
+      - models/best_finetuned_model.h5
+    params:
+      - config/config.yaml:
+          - data.classes
+          - data.split_dir
+          - training.batch_size
+          - training.image_size
+          - evaluation.validation_split
+          - evaluation.validation_model
+    metrics:
+      - reports/metrics/validation_evaluation_summary.json:
+          cache: false
